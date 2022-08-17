@@ -11,7 +11,11 @@
   "dependencies": {
     "@react-three/drei": "^9.22.6",
     "@react-three/fiber": "^8.3.1",
+    "@react-three/postprocessing": "^2.6.1",
+    "camera-controls": "^1.36.1",
+    "maath": "^0.0.2",
     "next": "12.2.5",
+    "nice-color-palettes": "^3.0.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "three": "^0.143.0"
