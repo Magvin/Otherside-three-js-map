@@ -1,27 +1,22 @@
 import React, { useMemo, useRef } from 'react'
 import {  useFrame } from '@react-three/fiber'
 import * as THREE from 'three'
-import lands from '../lands.json'
+
 
 const tempColor = new THREE.Color()
 const tempObject = new THREE.Vector3()
 
-function Dots() {
-  const jsonData = lands.data.parcels;
+function Dots({parcel}) {
+  
   const meshRef = useRef()
   const prevRef = useRef()
   const [hovered, set] = React.useState()
-  const n = jsonData.slice(0, 25000);
-  const n1 = jsonData.slice(2000, 3000);
-  const n2 = jsonData.slice(50000, 75000);
-  const n3 = jsonData.slice(75000, 99999)
-
-  const [points5] = React.useState(() => {
-    return Array.from(n, (item) => {
+  const [points] = React.useState(() => {
+    return Array.from(parcel, (item) => {
       return {
           cords:[
-            item.properties.coordinates[0],
-            item.properties.coordinates[1],
+            item.properties.coordinates[0] - 200,
+            item.properties.coordinates[1]  - 200
           ],
           id: item.properties.token_id
 
@@ -33,15 +28,17 @@ function Dots() {
     prevRef.current = hovered
     return prevRef.current 
   }, [hovered])
-  const data = Array.from({ length: points5.length }, () => ({ color: "#5B75D3", scale: 1 }))
-  const colorArray = useMemo(() => Float32Array.from(new Array(points5.length).fill().flatMap((_, i) => tempColor.set(data[i].color).toArray())), [])
+  const data = Array.from({ length: points.length }, () => ({ color: "#5B75D3", scale: 1 }))
+  const colorArray = useMemo(() => Float32Array.from(new Array(points.length).fill().flatMap((_, i) => tempColor.set(data[i].color).toArray())), [])
+
   useFrame(() => {
-    for (let i = 0; i < points5.length - 1; ++i) {
-      tempObject.x =points5[i].cords[0];
-      tempObject.y = points5[i].cords[1];
+    for (let i = 0; i < points.length - 1; ++i) {
+      tempObject.z =points[i].cords[0] 
+      tempObject.x = points[i].cords[1] 
+      tempObject.y = -30;
       const transform = new THREE.Matrix4()
       
-      if(hovered === points5[i].id) {
+      if(hovered === points[i].id) {
         if(i === pos) {
             tempColor.setRGB(10, 10, 10).toArray(colorArray, i * 3)
     meshRef.current.geometry.attributes.color.needsUpdate = true
@@ -54,7 +51,7 @@ function Dots() {
 
     }
       
-    meshRef.current.setMatrixAt(points5[i].id, transform.setPosition(tempObject))
+    meshRef.current.setMatrixAt(points[i].id, transform.setPosition(tempObject))
 
     }
       
@@ -64,10 +61,10 @@ function Dots() {
   return (
     <instancedMesh
     ref={meshRef}
-    args={[null, null, 1000]}
+    args={[null, null, points.length]}
     onPointerMove={(e) => (e.stopPropagation(), set(e.instanceId))}
     onPointerOut={(e) => set(undefined)}>
-    <sphereGeometry args={[0.2]}>
+    <sphereGeometry args={[0.24]}>
       <instancedBufferAttribute attach="attributes-color" args={[colorArray, 3]} />
     </sphereGeometry>
     <meshBasicMaterial toneMapped={false} vertexColors />
