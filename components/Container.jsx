@@ -11,16 +11,7 @@ const Container = () => {
   return (
     <>
       <group>
-        <Dots parcel={n} />
-      </group>
-      <group>
-        <Dots parcel={n1} />
-      </group>
-      <group>
-        <Dots parcel={n2} />
-      </group>
-      <group>
-        <Dots parcel={n3} />
+        <Dots parcel={jsonData} />
       </group>
     </>
   );

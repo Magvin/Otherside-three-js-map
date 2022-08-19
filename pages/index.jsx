@@ -7,7 +7,6 @@ import { Canvas, extend, useThree,  } from '@react-three/fiber'
 import { OrbitControls } from '../components/MapControls'
 extend({ SSAOPass, UnrealBloomPass })
 export default function Home() {
-  const cameraRef = React.useRef()
   return (
     <div className={css.scene}>
       <Canvas
@@ -20,19 +19,8 @@ export default function Home() {
         }}
       >
       <Container/>
-      <Post />
       <OrbitControls />
       </Canvas>
     </div>
   );
-}
-
-function Post() {
-  const { scene, camera } = useThree()
-  return (
-    <Effects disableGamma>
-      <sSAOPass args={[scene, camera]} kernelRadius={0.5} maxDistance={0.1} />
-      <unrealBloomPass threshold={0.9} strength={0.75} radius={0.5} />
-    </Effects>
-  )
 }
