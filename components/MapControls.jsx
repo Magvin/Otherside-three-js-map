@@ -52,6 +52,6 @@ export const OrbitControls = React.forwardRef(
       }
     }, [makeDefault, controls])
 
-    return <primitive ref={ref} object={controls} enableDamping={enableDamping} enableRotate={false} reverseOrbit={false} {...restProps} />
+    return <primitive ref={ref} object={controls} enableDamping={enableDamping}  reverseOrbit={false} {...restProps} />
   }
 )

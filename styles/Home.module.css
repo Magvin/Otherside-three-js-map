@@ -3,6 +3,9 @@
   height:100vh;
 }
 
+.stats {
+  height: 400px;
+}
 .canvas{
   background: #000;
 }

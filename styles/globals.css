@@ -23,4 +23,10 @@ a {
     color: white;
     background: black;
   }
+  
+}
+
+.stats > canvas {
+  height: 400px !important;
+  width: 200px !important;
 }

@@ -3,16 +3,12 @@ import Dots from "./Dots";
 
 const Container = () => {
   const jsonData = lands.data.parcels;
-  const n = jsonData.slice(0, 25000);
-  const n1 = jsonData.slice(25000, 50000);
-  const n2 = jsonData.slice(50000, 75000);
-  const n3 = jsonData.slice(75000, 99999);
-
+  const n = jsonData.slice(0, ((jsonData.length - 1 )/ 2));
+  const n1 = jsonData.slice(n + 1, jsonData.length - 1);
   return (
     <>
-      <group>
-        <Dots parcel={jsonData} />
-      </group>
+    <Dots parcel={n} />
+        <Dots parcel={n1} />
     </>
   );
 };

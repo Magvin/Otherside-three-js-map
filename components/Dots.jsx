@@ -3,7 +3,6 @@ import {  useFrame,useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { Text } from '@react-three/drei'
 
-
 const tempColor = new THREE.Color()
 const tempObject = new THREE.Vector3()
 
@@ -19,7 +18,7 @@ function Dots({parcel}) {
   const [enableTooltip, setEnableTooltip] = useState(false);
   const [hovered, set] = useState()
   const [positionOfHovered,setPositions] =useState({x:0,y:0,z:0});
-  const [points] = React.useState(() => {
+  const points = React.useMemo(() => {
     return Array.from(parcel, (item) => {
       return {
           cords:[
@@ -87,7 +86,6 @@ function Dots({parcel}) {
       clearInterval(checkTextRenderer);
     };
   }, [textRef]);
-
   useEffect(() => {
     if (panelRef && panelRef.current) {
       panelRef.current.visible = enableTooltip;
@@ -95,6 +93,7 @@ function Dots({parcel}) {
   }, [enableTooltip]);
 
   return (
+    <group>
     <instancedMesh
     ref={meshRef}
     args={[null, null, points.length]}
@@ -124,6 +123,7 @@ function Dots({parcel}) {
 
         </mesh>
   </instancedMesh>
+  </group>
   )
 }
 

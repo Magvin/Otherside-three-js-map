@@ -2,17 +2,16 @@ import css from "../styles/Home.module.css";
 import * as React from 'react'
 import Container from "../components/Container";
 import { SSAOPass, UnrealBloomPass } from 'three-stdlib'
-import { Effects } from '@react-three/drei'
-import { Canvas, extend, useThree,  } from '@react-three/fiber'
+import { Canvas, extend } from '@react-three/fiber'
 import { OrbitControls } from '../components/MapControls'
+import { Stats } from '@react-three/drei'
 extend({ SSAOPass, UnrealBloomPass })
 export default function Home() {
   return (
     <div className={css.scene}>
       <Canvas
-      antialias={true}
-        frameloop="always"
-        shadows={true}
+        concurrent
+        frameloop="demand"
         className={css.canvas}
         camera={{
           position: [200,100,150]
@@ -20,6 +19,7 @@ export default function Home() {
       >
       <Container/>
       <OrbitControls />
+      <Stats className="stats" />
       </Canvas>
     </div>
   );
