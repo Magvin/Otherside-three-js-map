@@ -8,7 +8,7 @@ const Container = () => {
   return (
     <>
     <Dots parcel={n} />
-        <Dots parcel={n1} />
+    <Dots parcel={n1} />
     </>
   );
 };
