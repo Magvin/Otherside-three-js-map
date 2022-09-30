@@ -10,11 +10,10 @@ export default function Home() {
   return (
     <div className={css.scene}>
       <Canvas
-        concurrent
-        frameloop="demand"
+        frameloop="always"
         className={css.canvas}
         camera={{
-          position: [200,100,150]
+          position: [200,100,150],
         }}
       >
       <Container/>
