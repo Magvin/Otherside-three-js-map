@@ -1,11 +1,11 @@
 import React, {useMemo, useState,useRef, useLayoutEffect} from 'react'
 import * as THREE from "three";
-import { useLoader,useFrame } from '@react-three/fiber'
+import { useLoader } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
-import { a, useSpring } from "@react-spring/three";
+import { a } from "@react-spring/three";
+import PointsShader from './PointsShader'
 
 const tempColor = new THREE.Color()
-
 function Dots({parcel}) {
   const meshRef = useRef()
   const [hoveredIndex, setHoveredIndex] = useState(0);
@@ -14,8 +14,8 @@ function Dots({parcel}) {
   const colorArray = useMemo(() => Float32Array.from(new Array(parcel.length).fill().flatMap((_, i) => tempColor.set(data[i].color).toArray())), [])
   const position =  useMemo(() => {
     const pos =  Array.from(parcel, (item) => {
-      return [item.properties.coordinates[0] -200,
-        item.properties.coordinates[1] - 200,0]
+      return [item.properties.coordinates[0] -201,
+        item.properties.coordinates[1] - 201,0]
     }).flat()
     const token =  Array.from(parcel, (item) => {
       return item.properties.token_id
@@ -24,7 +24,8 @@ function Dots({parcel}) {
       positions: new THREE.BufferAttribute(new Float32Array(pos),3),
       token: new THREE.BufferAttribute(new Float32Array(token),3 )
     }
-  });
+  },[parcel]);
+
   useLayoutEffect(() => {
     if (hoveredIndex !== null) {
       const i = hoveredIndex * 3;
@@ -47,6 +48,7 @@ function Dots({parcel}) {
   [hoveredIndex,colorArray])
   return (
     <a.points onPointerOver={(e)=>{
+      console.log(e.index)
       setHoveredIndex(e.index)
     }} 
     onPointerLeave={()=>{
@@ -65,6 +67,8 @@ function Dots({parcel}) {
         depthTest={false}
         map={colorMap}
         vertexColors={true}
+        vertexShader={PointsShader.vertexShader}
+        fragmentShader={PointsShader.fragmentShader}
         transparent
       />
     </a.points>

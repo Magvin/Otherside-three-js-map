@@ -3,8 +3,9 @@ import * as React from 'react'
 import Container from "../components/Container";
 import { SSAOPass, UnrealBloomPass } from 'three-stdlib'
 import { Canvas, extend } from '@react-three/fiber'
-import { OrbitControls } from '../components/MapControls'
+import { OrbitControls } from "@react-three/drei";
 import { Stats } from '@react-three/drei'
+import Mouse from "../components/Mouse";
 extend({ SSAOPass, UnrealBloomPass })
 export default function Home() {
   return (
@@ -13,11 +14,13 @@ export default function Home() {
         frameloop="always"
         className={css.canvas}
         camera={{
-          position: [200,100,150],
+          position: [0,-20,100]
         }}
       >
+      <OrbitControls enableDamping={false} enableRotate={false} />
+
+      {/* <Mouse/> */}
       <Container/>
-      <OrbitControls />
       <Stats className="stats" />
       </Canvas>
     </div>
