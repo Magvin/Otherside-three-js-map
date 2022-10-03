@@ -27,6 +27,6 @@ a {
 }
 
 .stats > canvas {
-  height: 400px !important;
+  height: 150px !important;
   width: 200px !important;
 }

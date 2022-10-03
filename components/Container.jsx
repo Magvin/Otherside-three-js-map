@@ -17,8 +17,8 @@ const Container = () => {
   return (
     <>
     
-    <Circle ref={ref} castShadow rotateX={Math.PI / 0.5}>
-      <meshBasicMaterial 
+    <Circle ref={ref} rotateX={Math.PI / 0.5} scale={2}>
+      <meshBasicMaterial
         depthWrite={false}
         depthTest={false}
         map={colorMap}
@@ -31,7 +31,6 @@ const Container = () => {
       onPointerMove={(e) => {
         ref.current.position.x = e.point.x;
         ref.current.position.y = e.point.y;
-        // console.log(e);
       }}>
       <planeGeometry args={[1000,1000,75,75]}/>
       <meshBasicMaterial  color='black' />
