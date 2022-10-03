@@ -8,7 +8,7 @@
 # Challenges 
   - Map optimization
   - Camera controls
+  - Cursor like in Otherside Map
   
 # In to do list
-  - Cursor like in Otherside Map
   - Tooltip
