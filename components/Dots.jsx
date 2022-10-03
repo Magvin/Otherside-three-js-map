@@ -1,6 +1,6 @@
 import React, {useMemo, useState,useRef, useLayoutEffect} from 'react'
 import * as THREE from "three";
-import { useLoader } from '@react-three/fiber'
+import { useLoader, useThree } from '@react-three/fiber'
 import { TextureLoader } from 'three/src/loaders/TextureLoader'
 import { a } from "@react-spring/three";
 import PointsShader from './PointsShader'
@@ -15,7 +15,7 @@ function Dots({parcel}) {
   const position =  useMemo(() => {
     const pos =  Array.from(parcel, (item) => {
       return [item.properties.coordinates[0] -201,
-        item.properties.coordinates[1] - 201,0]
+        item.properties.coordinates[1] - 201,20]
     }).flat()
     const token =  Array.from(parcel, (item) => {
       return item.properties.token_id
@@ -25,6 +25,17 @@ function Dots({parcel}) {
       token: new THREE.BufferAttribute(new Float32Array(token),3 )
     }
   },[parcel]);
+
+  const raycaster = useThree((state) => state.raycaster)
+  React.useEffect(() => {
+    if (raycaster.params.Points) {
+      const old = raycaster.params.Points.threshold
+      raycaster.params.Points.threshold = 0.175
+      return () => {
+        if (raycaster.params.Points) raycaster.params.Points.threshold = old
+      }
+    }
+  }, [])
 
   useLayoutEffect(() => {
     if (hoveredIndex !== null) {
